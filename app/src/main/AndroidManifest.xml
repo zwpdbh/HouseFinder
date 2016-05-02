@@ -41,6 +41,8 @@
         </activity>
         <activity android:name=".AddHouseActivity">
         </activity>
+        <activity android:name=".HouseDetailActivity">
+        </activity>
     </application>
 
 </manifest>

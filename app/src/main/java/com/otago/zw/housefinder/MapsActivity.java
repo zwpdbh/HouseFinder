@@ -27,7 +27,8 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OnMarkerClickListener{
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OnMarkerClickListener,
+        GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -124,6 +125,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
         mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
 
         // Add a marker in Sydney and move the camera
 
@@ -133,7 +135,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
         } else {
             LatLng sydney = new LatLng(-34, 151);
-            mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney")).setSnippet("Test");
             mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         }
 
@@ -154,5 +156,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onMarkerClick(Marker marker) {
         System.out.println(marker.getTitle());
         return false;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        System.out.println(marker.getTitle());
+        Intent intent = new Intent(this, HouseDetailActivity.class);
+        intent.putExtra(HouseDetailActivity.HOUSEDETAILINFO, marker.getTitle());
+        startActivity(intent);
     }
 }
