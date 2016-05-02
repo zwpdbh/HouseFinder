@@ -8,7 +8,16 @@
     <string name="pet_setting">Pet</string>
     <string name="house_price_setting">Housing Price</string>
     <string name="search_range_setting">Search Range</string>
+    <string name="search_maximum_people">Maximum People</string>
+    <string name="search_minimum_toilet">Minimum toilet</string>
+    
     <string name="setting_description">Description</string>
+
+    <string name="setting_heater">Heater</string>
+    <string name="setting_fridge">Fridge</string>
+    <string name="setting_hotWater">Hot Water</string>
+    <string name="setting_kitchen_tools">Kitchen_tools</string>
+    <string name="setting_insulation">Insulation</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
