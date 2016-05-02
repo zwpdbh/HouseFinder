@@ -39,8 +39,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_setting:
-                Intent intent = new Intent(this, SettingActivity.class);
-                startActivity(intent);
+                Intent settingIntent = new Intent(this, SettingActivity.class);
+                startActivity(settingIntent);
+                return true;
+            case R.id.add_house_info:
+                Intent addHouseInfoIntent = new Intent(this, AddHouseActivity.class);
+                startActivity(addHouseInfoIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
