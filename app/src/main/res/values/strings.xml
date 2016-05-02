@@ -4,6 +4,11 @@
     <string name="title_houses_list">Houses</string>
     <string name="title_houses_detail">Houses Detail</string>
     <string name="menu_setting">Setting</string>
+    <string name="smoke_setting">Smoke</string>
+    <string name="pet_setting">Pet</string>
+    <string name="house_price_setting">Housing Price</string>
+    <string name="search_range_setting">Search Range</string>
+    <string name="setting_description">Description</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
