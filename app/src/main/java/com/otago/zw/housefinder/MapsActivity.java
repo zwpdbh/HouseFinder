@@ -19,13 +19,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.support.v4.content.ContextCompat;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OnMarkerClickListener{
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -121,6 +123,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // add listener
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
+        mMap.setOnMarkerClickListener(this);
 
         // Add a marker in Sydney and move the camera
 
@@ -147,5 +150,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions().position(newPosition).title("Added new position").draggable(true));
     }
 
-
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        System.out.println(marker.getTitle());
+        return false;
+    }
 }
