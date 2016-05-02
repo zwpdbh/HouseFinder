@@ -16,5 +16,7 @@ public class HouseDetailActivity extends AppCompatActivity {
         String houseTitle = getIntent().getStringExtra(HOUSEDETAILINFO);
         TextView titleView = (TextView) findViewById(R.id.house_title);
         titleView.setText(houseTitle);
+
+
     }
 }
