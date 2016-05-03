@@ -36,6 +36,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OnMarkerClickListener,
         GoogleMap.OnInfoWindowClickListener {
 
+    private House[] mHouses = {new House("Test1", 100),
+        new House("Test2", 200), new House("Test3", 300)};
+
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private Location mCurrentLocation;
