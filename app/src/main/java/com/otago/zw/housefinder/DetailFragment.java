@@ -49,4 +49,10 @@ public class DetailFragment extends Fragment {
             priceView.setText(""+house.getPrice());
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong("houseId", this.houseId);
+    }
 }
