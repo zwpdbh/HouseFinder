@@ -38,17 +38,17 @@ public class MapsActivity extends AppCompatActivity {
 //    private GoogleApiClient mGoogleApiClient;
 //    private Location mCurrentLocation;
 //
-//    private String[] drawrerItems = {"Setting", "Saved Houses"};
-//    private ListView mDrawerList;
-//    private DrawerLayout mDrawerLayout;
+    private String[] drawrerItems = {"Setting", "Saved Houses"};
+    private ListView mDrawerList;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 //        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 //        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapView);
@@ -61,32 +61,32 @@ public class MapsActivity extends AppCompatActivity {
 //                    .build();
 //        }
 //
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-//                this,
-//                android.R.layout.simple_list_item_1,
-//                drawrerItems
-//        );
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                drawrerItems
+        );
 //
-//        mDrawerList.setAdapter(adapter);
-//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setAdapter(adapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 
-//    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-//        @Override
-//        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            selectItem(position);
-//        }
-//    }
-//
-//    private void selectItem(int position) {
-//        if (position == 0) {
-//            Intent settingIntent = new Intent(this, SettingActivity.class);
-//            startActivity(settingIntent);
-//        } else if (position == 1) {
-//            Intent intent = new Intent(this, SavedHouse.class);
-//            startActivity(intent);
-//        }
-//    }
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    private void selectItem(int position) {
+        if (position == 0) {
+            Intent settingIntent = new Intent(this, SettingActivity.class);
+            startActivity(settingIntent);
+        } else if (position == 1) {
+            Intent intent = new Intent(this, SavedHouse.class);
+            startActivity(intent);
+        }
+    }
 //
 //    protected void onStart() {
 //        mGoogleApiClient.connect();
