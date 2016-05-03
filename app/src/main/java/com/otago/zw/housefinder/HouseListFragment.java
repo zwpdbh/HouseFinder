@@ -29,7 +29,7 @@ public class HouseListFragment extends ListFragment {
             names[i] = House.mHouses[i].getAddress();
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(inflater.getContext(), android.R.layout.simple_list_item_1, names);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(inflater.getContext(), android.R.layout.simple_list_item_1, names);
         setListAdapter(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);
