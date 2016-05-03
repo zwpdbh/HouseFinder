@@ -13,6 +13,7 @@
 
     <string name="setting_description">Description</string>
     <string name="dummy">dummy</string>
+    <string name="Otago_About">about</string>
 
     <string name="setting_heater">Heater</string>
     <string name="setting_fridge">Fridge</string>

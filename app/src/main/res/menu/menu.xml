@@ -16,4 +16,8 @@
         android:title="Add"
         app:showAsAction="ifRoom|withText"/>
 
+    <item android:id="@+id/Otago_about"
+          android:title="@string/Otago_About"
+          app:showAsAction="never"/>
+
 </menu>

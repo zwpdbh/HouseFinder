@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -117,6 +118,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Intent addHouseInfoIntent = new Intent(this, AddHouseActivity.class);
                 startActivity(addHouseInfoIntent);
                 return true;
+            case R.id.Otago_about:
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("http://www.otago.ac.nz"));
+                startActivity(i);
             default:
                 return super.onOptionsItemSelected(item);
         }
