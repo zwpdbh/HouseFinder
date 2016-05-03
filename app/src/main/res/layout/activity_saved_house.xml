@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <fragment
-        class="com.otago.zw.housefinder.ListFragment"
+        class="com.otago.zw.housefinder.HouseListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/house_list_frag"
