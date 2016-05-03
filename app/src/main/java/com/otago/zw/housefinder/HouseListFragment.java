@@ -12,7 +12,7 @@ import android.app.ListFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HouseListFragment extends Fragment {
+public class HouseListFragment extends ListFragment {
 
 
     public HouseListFragment() {
@@ -21,10 +21,9 @@ public class HouseListFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_house_list, container, false);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 }
