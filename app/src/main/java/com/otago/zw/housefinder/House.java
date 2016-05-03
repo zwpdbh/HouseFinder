@@ -11,4 +11,7 @@ public class House {
         this.address = address;
         this.price = price;
     }
+
+    public static House[] mHouses = {new House("Test1", 100),
+            new House("Test2", 200), new House("Test3", 300)};
 }
