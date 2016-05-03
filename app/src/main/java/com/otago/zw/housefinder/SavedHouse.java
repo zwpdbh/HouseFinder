@@ -10,6 +10,7 @@ public class SavedHouse extends AppCompatActivity implements HouseListFragment.H
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_house);
+
     }
 
     @Override

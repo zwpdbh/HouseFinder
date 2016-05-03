@@ -26,25 +26,27 @@ public class DetailFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if (savedInstanceState != null) {
+            houseId = savedInstanceState.getLong("houseId");
+        }
+
         return inflater.inflate(R.layout.fragment_detail, container, false);
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//        View rootView = getView();
-//        if (rootView != null) {
-//            House house = House.mHouses[(int) houseId];
-//
-//            TextView addressView = (TextView) rootView.findViewById(R.id.house_title);
-//            addressView.setText(house.getAddress());
-//
-//            TextView priceView = (TextView) rootView.findViewById(R.id.house_price);
-//            priceView.setText(house.getPrice());
-//        }
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        View view = getView();
+        if (view != null) {
+            TextView addressView = (TextView) view.findViewById(R.id.house_address);
+            House house = House.mHouses[(int) houseId];
+            addressView.setText(house.getAddress());
+
+            TextView priceView = (TextView) view.findViewById(R.id.house_price);
+            priceView.setText(""+house.getPrice());
+        }
+    }
 }
