@@ -201,7 +201,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onInfoWindowClick(Marker marker) {
         System.out.println(marker.getTitle());
         Intent intent = new Intent(this, HouseDetailActivity.class);
-        intent.putExtra(HouseDetailActivity.HOUSEDETAILINFO, marker.getTitle());
+        intent.putExtra(HouseDetailActivity.HOUSE_ID, marker.getTitle());
         startActivity(intent);
     }
 }
