@@ -3,12 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <fragment
-        android:layout_width="match_parent"
+        class="com.otago.zw.housefinder.ListFragment"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/house_list_frag"
-        class="com.otago.zw.housefinder.ListFragment"/>
+        android:layout_weight="1"/>
+    
+    <fragment
+        class="com.otago.zw.housefinder.DetailFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/house_detail_frag"
+        android:layout_weight="2"/>
 
 </LinearLayout>
