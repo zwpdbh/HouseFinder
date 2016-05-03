@@ -84,6 +84,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (position == 0) {
             Intent settingIntent = new Intent(this, SettingActivity.class);
             startActivity(settingIntent);
+        } else if (position == 1) {
+            Intent intent = new Intent(this, SavedHouse.class);
+            startActivity(intent);
         }
     }
 
