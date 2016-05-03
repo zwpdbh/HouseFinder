@@ -43,8 +43,6 @@
         </activity>
         <activity android:name=".HouseDetailActivity">
         </activity>
-        <activity android:name=".SaveHouseInfoActivity">
-        </activity>
     </application>
 
 </manifest>
