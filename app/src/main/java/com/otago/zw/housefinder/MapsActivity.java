@@ -81,6 +81,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void selectItem(int position) {
+        if (position == 0) {
+            Intent settingIntent = new Intent(this, SettingActivity.class);
+            startActivity(settingIntent);
+        } else if (position == 1) {
+            Intent savedHouseInfoIntent = new Intent(this, SaveHouseInfoActivity.class);
+            startActivity(savedHouseInfoIntent);
+        }
         
     }
 

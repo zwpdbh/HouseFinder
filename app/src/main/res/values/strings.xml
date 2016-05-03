@@ -21,4 +21,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="saved_house_info">
+        <item>string_value1</item>
+        <item>string_value2</item>
+        <item>string_value3</item>
+    </string-array>
 </resources>
