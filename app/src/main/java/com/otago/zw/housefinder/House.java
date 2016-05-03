@@ -14,4 +14,12 @@ public class House {
 
     public static House[] mHouses = {new House("Test1", 100),
             new House("Test2", 200), new House("Test3", 300)};
+
+    public String getAddress() {
+        return address;
+    }
+
+    public int getPrice() {
+        return price;
+    }
 }

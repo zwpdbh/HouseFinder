@@ -13,7 +13,6 @@ import android.view.ViewGroup;
  */
 public class DetailFragment extends Fragment {
 
-    private long houseID;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -27,8 +26,5 @@ public class DetailFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_detail, container, false);
     }
 
-    public void setHouseID(long id) {
-        this.houseID = id;
-    }
 
 }
