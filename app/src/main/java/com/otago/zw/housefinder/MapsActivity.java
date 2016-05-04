@@ -62,6 +62,9 @@ public class MapsActivity extends AppCompatActivity {
             case 1:
                 fragment = new SettingFragment();
                 break;
+            case 2:
+                fragment = new SavedHouseFragment();
+                break;
             default:
                 fragment = new MapFragment();
         }
