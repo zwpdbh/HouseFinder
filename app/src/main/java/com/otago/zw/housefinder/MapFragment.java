@@ -2,6 +2,7 @@ package com.otago.zw.housefinder;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,7 +34,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener,
+        GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener {
 
     MapView mapView;
     GoogleMap googleMap;
@@ -71,6 +73,12 @@ public class MapFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mapView.onResume();
+
+        // why onResume() the googleMap is not null?
+        googleMap.setOnMarkerClickListener(this);
+        googleMap.setOnMapClickListener(this);
+        googleMap.setOnMapLongClickListener(this);
+        googleMap.setOnInfoWindowClickListener(this);
     }
 
     @Override
@@ -91,7 +99,7 @@ public class MapFragment extends Fragment {
         mapView.onLowMemory();
     }
 
-
+    // helper method to add marker
     private void addMarker(double latitude, double longitude) {
         // create marker
         MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Hello Maps");
@@ -105,4 +113,27 @@ public class MapFragment extends Fragment {
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        System.out.println("click marker");
+        return false;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        System.out.println("click map");
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        addMarker(latLng.latitude, latLng.longitude);
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        System.out.println(marker.getTitle());
+        Intent intent = new Intent(getContext(), HouseDetailActivity.class);
+        intent.putExtra(HouseDetailActivity.HOUSE_ID, marker.getTitle());
+        startActivity(intent);
+    }
 }
