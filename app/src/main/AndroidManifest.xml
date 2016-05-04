@@ -62,8 +62,6 @@
         </activity>
         <activity android:name=".HouseDetailActivity">
         </activity>
-        <activity android:name=".SavedHouse">
-        </activity>
     </application>
 
 </manifest>
