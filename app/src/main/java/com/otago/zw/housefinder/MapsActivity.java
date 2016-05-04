@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-public class MapsActivity extends AppCompatActivity {
+public class MapsActivity extends AppCompatActivity implements HouseListFragment.HouseListFragmentListener {
 
     private String[] drawrerItems = {"Home", "Setting", "Saved Houses"};
     private ListView mDrawerList;
@@ -46,13 +46,6 @@ public class MapsActivity extends AppCompatActivity {
     }
 
     private void selectItem(int position) {
-//        if (position == 0) {
-//            Intent settingIntent = new Intent(this, SettingActivity.class);
-//            startActivity(settingIntent);
-//        } else if (position == 1) {
-//            Intent intent = new Intent(this, SavedHouse.class);
-//            startActivity(intent);
-//        }
 
         Fragment fragment;
         switch (position) {
@@ -74,6 +67,26 @@ public class MapsActivity extends AppCompatActivity {
         ft.addToBackStack(null);
         ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+    }
+
+    @Override
+    public void itemClicked(long id) {
+        View fragmentContainer = findViewById(R.id.fragment_container);
+
+        if (fragmentContainer != null) {
+            DetailFragment details = new DetailFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+            details.setHouseId(id);
+            ft.replace(R.id.fragment_container, details);
+            ft.addToBackStack(null);
+            ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
+        } else {
+            Intent intent = new Intent(this, HouseDetailActivity.class);
+            intent.putExtra(HouseDetailActivity.HOUSE_ID, (int) id);
+            startActivity(intent);
+        }
     }
 
 }
