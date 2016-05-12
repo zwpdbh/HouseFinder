@@ -69,6 +69,10 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
         ft.commit();
     }
 
+
+    /**For showing the detailed house info, if it is on tablet, then use fragment
+     * Otherwise, use activity.
+     * */
     @Override
     public void itemClicked(long id) {
         View fragmentContainer = findViewById(R.id.fragment_container);
