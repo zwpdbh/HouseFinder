@@ -36,4 +36,9 @@
         <item>Setting</item>
         <item>Saved House</item>
     </string-array>
+
+    <!--actionbar toggle-->
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+
 </resources>

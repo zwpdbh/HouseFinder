@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.MenuItem;
+import android.support.v7.app.ActionBarDrawerToggle;
 
 
 public class MapsActivity extends AppCompatActivity implements HouseListFragment.HouseListFragmentListener {
@@ -19,6 +20,7 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
     private String[] drawerItems;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,34 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
         if (savedInstanceState == null) {
             selectItem(0);
         }
+
+        //Create actionBarDrawer Toggle
+        drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open_drawer, R.string.close_drawer) {
+            // called when a drawer has settled in a completely closed state
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
+            }
+
+            // called when a drawer has settled in a completely open state
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerLayout.addDrawerListener(drawerToggle);
+    }
+
+    //Called whenever we call invalidateOptionsMenu()
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // if the drawer is open, hide action items related  to the content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.Otago_about).setVisible(!drawerOpen);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
