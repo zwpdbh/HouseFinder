@@ -1,6 +1,5 @@
 package com.otago.zw.housefinder;
 
-import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,7 +60,7 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
             title = drawerItems[position];
         }
         try {
-            getActionBar().setTitle(title);
+            getSupportActionBar().setTitle(title);
         } catch (NullPointerException e) {
             System.err.println("Null for ActionBar");
         }
