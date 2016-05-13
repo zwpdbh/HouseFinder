@@ -25,6 +25,8 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle drawerToggle;
 
+    private int currentPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +46,10 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState != null) {
+            currentPosition = savedInstanceState.getInt("position");
+            setActionBarTitle(currentPosition);
+        } else {
             selectItem(0);
         }
 
@@ -66,6 +71,12 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("position", currentPosition);
     }
 
     @Override
@@ -114,6 +125,8 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
 
 
     private void selectItem(int position) {
+        currentPosition = position;
+
         Fragment fragment;
         switch (position) {
             case 0:
