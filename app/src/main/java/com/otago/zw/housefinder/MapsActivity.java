@@ -1,21 +1,23 @@
 package com.otago.zw.housefinder;
 
+import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-//import android.support.v4.app.Fragment;
 import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.view.MenuItem;
 
 
 public class MapsActivity extends AppCompatActivity implements HouseListFragment.HouseListFragmentListener {
 
-    private String[] drawrerItems = {"Home", "Setting", "Saved Houses"};
+    private String[] drawerItems;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
 
@@ -24,6 +26,7 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        drawerItems = getResources().getStringArray(R.array.drawer_list);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -31,11 +34,15 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                drawrerItems
+                drawerItems
         );
 
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        if (savedInstanceState == null) {
+            selectItem(0);
+        }
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -45,8 +52,23 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
         }
     }
 
-    private void selectItem(int position) {
 
+    private void setActionBarTitle(int position) {
+        String title;
+        if (position==0) {
+            title = getResources().getString(R.string.app_name);
+        } else {
+            title = drawerItems[position];
+        }
+        try {
+            getActionBar().setTitle(title);
+        } catch (NullPointerException e) {
+            System.err.println("Null for ActionBar");
+        }
+    }
+
+
+    private void selectItem(int position) {
         Fragment fragment;
         switch (position) {
             case 0:
@@ -67,6 +89,12 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
         ft.addToBackStack(null);
         ft.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+
+        // Set the action bar title
+        setActionBarTitle(position);
+
+        // Close the drawer
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
 
@@ -93,4 +121,23 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
         }
     }
 
+
+    /**ActionBar*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Otago_about:
+                // can create intent, and start intent when click on the item
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

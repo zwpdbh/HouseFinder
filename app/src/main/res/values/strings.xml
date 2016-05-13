@@ -30,4 +30,10 @@
         <item>string_value2</item>
         <item>string_value3</item>
     </string-array>
+
+    <string-array name="drawer_list">
+        <item>Home</item>
+        <item>Setting</item>
+        <item>Saved House</item>
+    </string-array>
 </resources>
