@@ -4,6 +4,8 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.MenuItem;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.content.res.Configuration;
 
 
 public class MapsActivity extends AppCompatActivity implements HouseListFragment.HouseListFragmentListener {
@@ -60,11 +63,24 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
             }
         };
         mDrawerLayout.addDrawerListener(drawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
     //Called whenever we call invalidateOptionsMenu()
-
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if the drawer is open, hide action items related  to the content view
@@ -161,6 +177,9 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         switch (item.getItemId()) {
             case R.id.Otago_about:
                 // can create intent, and start intent when click on the item
