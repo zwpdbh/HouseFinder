@@ -1,15 +1,21 @@
 package com.otago.zw.housefinder;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 
 import android.app.Fragment;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -21,21 +27,33 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener,
-        GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener {
+        GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    MapView mapView;
-    GoogleMap googleMap;
+    private MapView mapView;
+    private GoogleMap googleMap;
+
+    private GoogleApiClient mGoogleApiClient;
+    private Context mContext;
+    private Location mLocation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
 
-        // Gets the MapView from the XML layout and creates it
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(mContext)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+
+
+        /* Gets the MapView from the XML layout and creates it */
         mapView  = (MapView) v.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
@@ -49,16 +67,6 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
         // why it is null, and later is not?
         googleMap = mapView.getMap();
-        try {
-            googleMap.setMyLocationEnabled(true);
-            Location myLocation = googleMap.getMyLocation();
-            LatLng myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-            addMarker(myLatLng.latitude, myLatLng.longitude);
-        } catch (SecurityException e) {
-            System.out.println("Permission denied by user!!!");
-        }
-
-
 
 //        // latitude and longitude
 //        double latitude = 17.385044;
@@ -83,9 +91,27 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         mapView.onPause();
+    }
+
+    @Override
+    public void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
     @Override
@@ -135,8 +161,35 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     @Override
     public void onInfoWindowClick(Marker marker) {
         System.out.println(marker.getTitle());
-        Intent intent = new Intent(getContext(), AddHouseActivity.class);
+        Intent intent = new Intent(mContext, AddHouseActivity.class);
         intent.putExtra(HouseDetailActivity.HOUSE_ID, marker.getTitle());
         startActivity(intent);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        System.err.println("onConnectionSuspended: Error");
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        try {
+            googleMap.setMyLocationEnabled(true);
+            mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (mLocation!=null) {
+                System.out.println(mLocation.getLatitude());
+                System.out.println(mLocation.getLongitude());
+                addMarker(mLocation.getLatitude(), mLocation.getLongitude());
+            } else {
+                System.out.println("My Last Location Is NULL");
+            }
+        } catch (SecurityException e) {
+            System.out.println("Permission denied by user!!!");
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        System.err.println("onConnectionFailed: Error");
     }
 }
