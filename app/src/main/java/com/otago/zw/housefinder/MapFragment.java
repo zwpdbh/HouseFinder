@@ -1,29 +1,20 @@
 package com.otago.zw.housefinder;
 
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import android.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -58,12 +49,22 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
         // why it is null, and later is not?
         googleMap = mapView.getMap();
+        try {
+            googleMap.setMyLocationEnabled(true);
+            Location myLocation = googleMap.getMyLocation();
+            LatLng myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+            addMarker(myLatLng.latitude, myLatLng.longitude);
+        } catch (SecurityException e) {
+            System.out.println("Permission denied by user!!!");
+        }
 
-        // latitude and longitude
-        double latitude = 17.385044;
-        double longitude = 78.486671;
 
-        addMarker(latitude, longitude);
+
+//        // latitude and longitude
+//        double latitude = 17.385044;
+//        double longitude = 78.486671;
+
+
 
         // Perform any camera updates here
         return v;
@@ -101,6 +102,8 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
     // helper method to add marker
     private void addMarker(double latitude, double longitude) {
+        System.out.println(latitude + " : " + longitude);
+
         // create marker
         MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Hello Maps");
 
