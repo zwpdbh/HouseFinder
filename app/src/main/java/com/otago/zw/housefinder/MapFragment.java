@@ -1,21 +1,29 @@
 package com.otago.zw.housefinder;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -27,11 +35,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener,
-        GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        GoogleMap.OnMapLongClickListener, GoogleMap.OnInfoWindowClickListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private MapView mapView;
     private GoogleMap googleMap;
@@ -39,6 +51,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     private GoogleApiClient mGoogleApiClient;
     private Context mContext;
     private Location mLocation;
+    private LocationRequest mLocationRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -173,6 +186,13 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        int permissionCheck = ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            System.out.println("Get permission for location.");
+        } else if (permissionCheck == PackageManager.PERMISSION_DENIED){
+            System.out.println("Do not have location, permission denied.");
+        }
+
         try {
             googleMap.setMyLocationEnabled(true);
             mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
@@ -186,10 +206,43 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         } catch (SecurityException e) {
             System.out.println("Permission denied by user!!!");
         }
+
+        // location request setting
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setNumUpdates(5000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        // if user turn on the location update
+        startLocationUpdates();
+
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         System.err.println("onConnectionFailed: Error");
     }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        System.out.println("onLocationChanged");
+        mLocation = location;
+        System.out.println(mLocation.getLatitude() + " : " + mLocation.getLongitude());
+    }
+
+
+    protected void startLocationUpdates() {
+        System.out.println("Updating location");
+        try {
+            System.out.println("Request location ->");
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient, mLocationRequest, this);
+        } catch (SecurityException e) {
+            System.out.println("requestLocationUpdates: Failed");
+        }
+
+    }
+
+
 }
