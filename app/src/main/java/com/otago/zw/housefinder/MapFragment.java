@@ -132,7 +132,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     @Override
     public void onInfoWindowClick(Marker marker) {
         System.out.println(marker.getTitle());
-        Intent intent = new Intent(getContext(), HouseDetailActivity.class);
+        Intent intent = new Intent(getContext(), AddHouseActivity.class);
         intent.putExtra(HouseDetailActivity.HOUSE_ID, marker.getTitle());
         startActivity(intent);
     }
