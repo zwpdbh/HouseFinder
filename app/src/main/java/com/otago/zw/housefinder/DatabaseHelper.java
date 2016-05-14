@@ -42,4 +42,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         houseValue.put("IMAGE_RESOURCE_ID", imageResourceID);
         db.insert("HOUSE", null, houseValue);
     }
+
+
 }
