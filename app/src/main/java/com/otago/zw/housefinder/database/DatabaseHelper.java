@@ -1,4 +1,4 @@
-package com.otago.zw.housefinder;
+package com.otago.zw.housefinder.database;
 
 /**
  * Created by zw on 5/13/16.
@@ -10,7 +10,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "houseFinder";
+    private static final String DB_NAME = "HouseFinder.db";
     private static final int DB_VERSION = 1;
 
 
