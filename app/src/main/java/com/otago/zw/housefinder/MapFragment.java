@@ -80,13 +80,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
         // why it is null, and later is not?
         googleMap = mapView.getMap();
-
-//        // latitude and longitude
-//        double latitude = 17.385044;
-//        double longitude = 78.486671;
-
-
-
+        
         // Perform any camera updates here
         return v;
     }
