@@ -2,6 +2,8 @@ package com.otago.zw.housefinder.database;
 
 import android.provider.BaseColumns;
 
+import java.util.UUID;
+
 /**
  * Created by zw on 5/15/16.
  */

@@ -32,13 +32,10 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
 
     private int currentPosition = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
-
 
         drawerItems = getResources().getStringArray(R.array.drawer_list);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

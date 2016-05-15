@@ -26,13 +26,14 @@ public class HouseListFragment extends ListFragment {
         // Required empty public constructor
     }
 
+    public HouseInfo mHouseInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        String[] names = new String[House.mHouses.length];
+        String[] names = new String[mHouseInfo.getHouses().size()];
         for (int i=0; i<names.length; i++) {
-            names[i] = House.mHouses[i].getAddress();
+            names[i] = mHouseInfo.getHouses().get(i).getDescription();
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(inflater.getContext(), android.R.layout.simple_list_item_1, names);
@@ -45,6 +46,7 @@ public class HouseListFragment extends ListFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mHouseInfo = HouseInfo.get(context);
         this.listener = (HouseListFragmentListener) context;
     }
 

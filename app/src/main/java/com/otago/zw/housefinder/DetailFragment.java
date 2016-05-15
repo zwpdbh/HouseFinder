@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class DetailFragment extends Fragment {
 
     private long houseId;
-
+    private HouseInfo mHouseInfo;
     public void setHouseId(long houseId) {
         this.houseId = houseId;
     }
@@ -38,11 +38,12 @@ public class DetailFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        mHouseInfo = HouseInfo.get(getContext());
 
         View view = getView();
         if (view != null) {
             TextView addressView = (TextView) view.findViewById(R.id.house_address);
-            House house = House.mHouses[(int) houseId];
+            House house = mHouseInfo.getHouses().get((int) houseId);
             addressView.setText(house.getAddress());
 
             TextView priceView = (TextView) view.findViewById(R.id.house_price);
