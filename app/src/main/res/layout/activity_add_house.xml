@@ -56,7 +56,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/save_house"
+        android:id="@+id/save_house_button"
         android:text="Save"/>
 
 </LinearLayout>
