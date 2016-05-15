@@ -15,6 +15,9 @@ import org.w3c.dom.Text;
 public class AddHouseActivity extends AppCompatActivity {
     public static final String LATITUDE = "House_latitude";
     public static final String LONGITUDE = "House_longitude";
+    public static final String ADDRESS = "House_address";
+    public static final String DESCRIPTION = "House_description";
+    public static final String PRICE = "House_Price";
 
     private Button mButton;
 
