@@ -14,6 +14,7 @@ public class HouseDBSchema {
         public static final String NAME = "Houses";
 
         public static final class Cols implements BaseColumns{
+            public static final String UUID = "uuid";
             public static final String ADDRESS = "address";
             public static final String LATITUDE = "latitude";
             public static final String LONGITUDE = "longitude";
