@@ -14,4 +14,14 @@
         android:layout_height="wrap_content"
         android:text="@string/dummy"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_house_detail_latitude"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_house_detail_longitude"/>
+
 </LinearLayout>

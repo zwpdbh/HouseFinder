@@ -48,6 +48,12 @@ public class DetailFragment extends Fragment {
 
             TextView priceView = (TextView) view.findViewById(R.id.house_price);
             priceView.setText(""+house.getPrice());
+
+            TextView latitudeView = (TextView) view.findViewById(R.id.show_house_detail_latitude);
+            latitudeView.setText(house.getLatitude()+"");
+
+            TextView longitudeView = (TextView) view.findViewById(R.id.show_house_detail_longitude);
+            longitudeView.setText(house.getLongitude()+"");
         }
     }
 

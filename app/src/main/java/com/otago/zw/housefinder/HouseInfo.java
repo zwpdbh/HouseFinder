@@ -79,7 +79,7 @@ public class HouseInfo {
         values.put(HouseTable.Cols.ADDRESS, house.getAddress());
         values.put(HouseTable.Cols.DESCRIPTION, house.getDescription());
         values.put(HouseTable.Cols.LATITUDE, house.getLatitude());
-        values.put(HouseTable.Cols.LATITUDE, house.getLongitude());
+        values.put(HouseTable.Cols.LONGITUDE, house.getLongitude());
         values.put(HouseTable.Cols.PRICE, house.getPrice());
         values.put(HouseTable.Cols.PICTURE_ID, house.getPictureId());
 

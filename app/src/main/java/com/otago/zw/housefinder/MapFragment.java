@@ -53,6 +53,8 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     private Location mLocation;
     private LocationRequest mLocationRequest;
 
+    private HouseInfo mHouseInfo;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
@@ -138,7 +140,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         System.out.println(latitude + " : " + longitude);
 
         // create marker
-        MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Hello Maps");
+        MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("New Marker");
 
         // Changing marker icon
         marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
@@ -147,6 +149,13 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         googleMap.addMarker(marker);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        mHouseInfo = HouseInfo.get(getActivity());
+        for (int i=0; i< mHouseInfo.getHouses().size(); i++) {
+            House house = mHouseInfo.getHouses().get(i);
+            marker = new MarkerOptions().position(new LatLng(house.getLatitude(), house.getLongitude())).title(house.getAddress());
+            googleMap.addMarker(marker);
+        }
     }
 
     @Override

@@ -27,7 +27,7 @@ public class AddHouseActivity extends AppCompatActivity {
         TextView latitudeView = (TextView) findViewById(R.id.latitude);
         TextView longitudeView = (TextView) findViewById(R.id.longitude);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         LatLng latLng = new LatLng(intent.getDoubleExtra(LATITUDE, 0), intent.getDoubleExtra(LONGITUDE, 0));
         System.out.println("Get latLng: " + latLng.latitude + "<>" +latLng.longitude);
         latitudeView.setText(latLng.latitude+"");
@@ -56,6 +56,8 @@ public class AddHouseActivity extends AppCompatActivity {
                 TextView addressView = (TextView) findViewById(R.id.house_address);
                 String address = addressView.getText().toString();
 
+
+                System.out.println("Saved Position is: " + latitude + "<>" + longitude);
                 house.setDescription(description);
                 house.setPrice(price);
                 house.setAddress(address);
@@ -63,6 +65,8 @@ public class AddHouseActivity extends AppCompatActivity {
                 house.setLongitude(longitude);
 
                 houseInfo.addHouse(house);
+                Intent intent = new Intent(v.getContext(), MapsActivity.class);
+                startActivity(intent);
             }
         });
     }
