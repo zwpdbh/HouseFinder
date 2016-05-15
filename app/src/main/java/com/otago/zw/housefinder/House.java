@@ -15,7 +15,11 @@ public class House {
     private int pictureId;
 
     public House() {
-        mUUID = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+
+    public House(UUID uuid) {
+        mUUID = uuid;
     }
 
     public UUID getUUID() {

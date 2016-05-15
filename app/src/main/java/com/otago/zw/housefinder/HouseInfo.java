@@ -2,9 +2,11 @@ package com.otago.zw.housefinder;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.otago.zw.housefinder.database.DatabaseHelper;
+import com.otago.zw.housefinder.database.HouseCursorWrapper;
 import com.otago.zw.housefinder.database.HouseDBSchema;
 import com.otago.zw.housefinder.database.HouseDBSchema.HouseTable;
 
@@ -33,24 +35,42 @@ public class HouseInfo {
     private HouseInfo(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new DatabaseHelper(mContext).getWritableDatabase();
-//        mHouses = new ArrayList<>();
-//
-//        for (int i=5; i < 10; i++) {
-//            House house = new House();
-//            house.setAddress("House_" + i );
-//            house.setPrice(i * i * 100);
-//            house.setDescription("House: " + house.getUUID());
-//            mHouses.add(house);
-//        }
     }
 
     public List<House> getHouses() {
-//        return mHouses;
-        return new ArrayList<>();
+        List<House> houses = new ArrayList<>();
+        HouseCursorWrapper cursorWrapper = (HouseCursorWrapper) queryHouses(null, null);
+        try {
+            cursorWrapper.moveToFirst();
+            while (!cursorWrapper.isAfterLast()) {
+                houses.add(cursorWrapper.getHouse());
+                cursorWrapper.moveToNext();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            cursorWrapper.close();
+        }
+        return houses;
     }
 
     public House getHouse(UUID uuid) {
-        return null;
+        HouseCursorWrapper cursor = (HouseCursorWrapper) queryHouses(
+                HouseTable.Cols.UUID + " = ?",
+                new String[] { uuid.toString() }
+        );
+
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getHouse();
+        } finally {
+            cursor.close();
+        }
+
     }
 
     private static ContentValues getContentValues(House house) {
@@ -66,6 +86,20 @@ public class HouseInfo {
         return values;
     }
 
+
+    private Cursor queryHouses(String whereClause, String[] whereArgs) {
+        Cursor cursor = mDatabase.query(
+                HouseTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null);
+        return new HouseCursorWrapper(cursor);
+    }
+
+
     public void addHouse(House h) {
         ContentValues values = getContentValues(h);
         mDatabase.insert(HouseTable.NAME, null, values);
@@ -76,4 +110,5 @@ public class HouseInfo {
         ContentValues values = getContentValues(house);
         mDatabase.update(HouseTable.NAME, values, HouseTable.Cols.UUID + " = ?", new String[] { uuidString });
     }
+
 }
