@@ -57,4 +57,5 @@ public class HouseListFragment extends ListFragment {
             listener.itemClicked(id);
         }
     }
+
 }

@@ -1,9 +1,12 @@
 package com.otago.zw.housefinder;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.otago.zw.housefinder.database.DatabaseHelper;
+import com.otago.zw.housefinder.database.HouseDBSchema;
+import com.otago.zw.housefinder.database.HouseDBSchema.HouseTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,15 +50,30 @@ public class HouseInfo {
     }
 
     public House getHouse(UUID uuid) {
-//        for (House each: mHouses) {
-//            if (each.getUUID().equals(uuid)) {
-//                return each;
-//            }
-//        }
         return null;
     }
 
+    private static ContentValues getContentValues(House house) {
+        ContentValues values = new ContentValues();
+        values.put(HouseTable.Cols.UUID, house.getUUID().toString());
+        values.put(HouseTable.Cols.ADDRESS, house.getAddress());
+        values.put(HouseTable.Cols.DESCRIPTION, house.getDescription());
+        values.put(HouseTable.Cols.LATITUDE, house.getLatitude());
+        values.put(HouseTable.Cols.LATITUDE, house.getLongitude());
+        values.put(HouseTable.Cols.PRICE, house.getPrice());
+        values.put(HouseTable.Cols.PICTURE_ID, house.getPictureId());
+
+        return values;
+    }
+
     public void addHouse(House h) {
-//        mHouses.add(h);
+        ContentValues values = getContentValues(h);
+        mDatabase.insert(HouseTable.NAME, null, values);
+    }
+
+    public void updateHouse(House house) {
+        String uuidString = house.getUUID().toString();
+        ContentValues values = getContentValues(house);
+        mDatabase.update(HouseTable.NAME, values, HouseTable.Cols.UUID + " = ?", new String[] { uuidString });
     }
 }
