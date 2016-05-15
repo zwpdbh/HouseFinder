@@ -80,7 +80,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
         // why it is null, and later is not?
         googleMap = mapView.getMap();
-        
+
         // Perform any camera updates here
         return v;
     }
@@ -169,7 +169,8 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     public void onInfoWindowClick(Marker marker) {
         System.out.println(marker.getTitle());
         Intent intent = new Intent(mContext, AddHouseActivity.class);
-        intent.putExtra(HouseDetailActivity.HOUSE_ID, marker.getTitle());
+        intent.putExtra(AddHouseActivity.LATITUDE, marker.getPosition().latitude);
+        intent.putExtra(AddHouseActivity.LONGITUDE, marker.getPosition().longitude);
         startActivity(intent);
     }
 
