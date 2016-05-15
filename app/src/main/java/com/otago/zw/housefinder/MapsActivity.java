@@ -201,6 +201,8 @@ public class MapsActivity extends AppCompatActivity implements HouseListFragment
         switch (item.getItemId()) {
             case R.id.Otago_about:
                 // can create intent, and start intent when click on the item
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
