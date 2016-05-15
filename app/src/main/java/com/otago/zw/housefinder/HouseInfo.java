@@ -1,6 +1,9 @@
 package com.otago.zw.housefinder;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.otago.zw.housefinder.database.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,8 @@ public class HouseInfo {
     private static HouseInfo sHouseInfo;
 
     private List<House> mHouses;
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
 
     public static HouseInfo get(Context context) {
         if (sHouseInfo == null) {
@@ -23,9 +28,11 @@ public class HouseInfo {
     }
 
     private HouseInfo(Context context) {
+        mContext = context.getApplicationContext();
+        mDatabase = new DatabaseHelper(mContext).getWritableDatabase();
         mHouses = new ArrayList<>();
 
-        for (int i=0; i < 10; i++) {
+        for (int i=5; i < 10; i++) {
             House house = new House();
             house.setAddress("House_" + i );
             house.setPrice(i * i * 100);
@@ -45,5 +52,9 @@ public class HouseInfo {
             }
         }
         return null;
+    }
+
+    public void addHouse(House h) {
+        mHouses.add(h);
     }
 }
