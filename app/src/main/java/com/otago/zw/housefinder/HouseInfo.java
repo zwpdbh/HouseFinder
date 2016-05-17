@@ -81,10 +81,13 @@ public class HouseInfo {
         String where = HouseTable.Cols.LATITUDE + " = ?" + " AND " + HouseTable.Cols.LONGITUDE + " = ?";
         String[] whereArgs = new String[] { Double.toString(latitude), Double.toString(longitude)};
 //        Cursor cursor = mDatabase.query(HouseTable.NAME, null, where, whereArgs, null, null, null);
-        
+
         String sql = "SELECT * FROM " + HouseTable.NAME + " WHERE " + HouseTable.Cols.LATITUDE + " = ? AND " + HouseTable.Cols.LONGITUDE + " = ?";
         Cursor cursor = mDatabase.rawQuery(sql, whereArgs);
-        // SELECT * FROM HOUSE WHERE LATITUDE = ? AND LONGITUDE = ?
+
+//        String sql = "SELECT * FROM " + HouseTable.NAME ;
+//        Cursor cursor = mDatabase.rawQuery(sql, null);
+
 
         try {
             if (cursor.getCount() == 0) {

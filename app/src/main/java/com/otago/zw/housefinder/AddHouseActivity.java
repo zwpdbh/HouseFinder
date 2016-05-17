@@ -19,7 +19,7 @@ public class AddHouseActivity extends AppCompatActivity {
     public static final String ADDRESS = "HOUSE_ADDRESS";
     public static final String DESCRIPTION = "HOUSE_DESCRIPTION";
     public static final String PRICE = "HOUSE_PRICE";
-    public static final String UPDATE = "UPDATE_OR_CREATE";
+    public static final String UPDATEORNOT = "UPDATE";
 
     private Button mButton;
     private boolean update;
@@ -40,20 +40,30 @@ public class AddHouseActivity extends AppCompatActivity {
         priceView = (TextView) findViewById(R.id.house_price);
         descriptionView = (TextView) findViewById(R.id.house_description);
         addressView = (TextView) findViewById(R.id.house_address);
-        update = false;
 
         final Intent intent = getIntent();      // why declared as final ?
+        update = false;
+        String updateORCreate = intent.getStringExtra(UPDATEORNOT);
+        if (updateORCreate.equals("update")) {
+            update = true;
+        } else {
+            update = false;
+        }
 
         LatLng latLng = new LatLng(intent.getDoubleExtra(LATITUDE, 0), intent.getDoubleExtra(LONGITUDE, 0));
         System.out.println("Get latLng: " + latLng.latitude + "<>" + latLng.longitude);
         latitudeView.setText(Double.toString(latLng.latitude));
         longitudeView.setText(Double.toString(latLng.longitude));
 
-        if (intent.getStringExtra(UPDATE).equals("update")) {
+
+        if (update) {
             addressView.setText(intent.getStringExtra(ADDRESS));
             descriptionView.setText(intent.getStringExtra(DESCRIPTION));
-            priceView.setText(intent.getIntExtra(PRICE, 0));
-            update = false;
+            priceView.setText(intent.getIntExtra(PRICE, 0)+"");
+        } else {
+            addressView.setText("House Address");
+            descriptionView.setText("House Description");
+            priceView.setText("0.0");
         }
 
 

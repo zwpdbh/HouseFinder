@@ -186,7 +186,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
             Intent intent = new Intent(mContext, AddHouseActivity.class);
             intent.putExtra(AddHouseActivity.LATITUDE, marker.getPosition().latitude);
             intent.putExtra(AddHouseActivity.LONGITUDE, marker.getPosition().longitude);
-            intent.putExtra(AddHouseActivity.UPDATE, "create");
+            intent.putExtra(AddHouseActivity.UPDATEORNOT, "create");
             startActivity(intent);
         } else {
             System.out.println("This is an exist marker");
@@ -196,7 +196,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
             intent.putExtra(AddHouseActivity.PRICE, house.getPrice());
             intent.putExtra(AddHouseActivity.ADDRESS, house.getAddress());
             intent.putExtra(AddHouseActivity.DESCRIPTION, house.getDescription());
-            intent.putExtra(AddHouseActivity.UPDATE, "update");
+            intent.putExtra(AddHouseActivity.UPDATEORNOT, "update");
             startActivity(intent);
         }
 
