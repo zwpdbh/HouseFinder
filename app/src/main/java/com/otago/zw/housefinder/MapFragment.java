@@ -176,11 +176,30 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        System.out.println(marker.getTitle());
-        Intent intent = new Intent(mContext, AddHouseActivity.class);
-        intent.putExtra(AddHouseActivity.LATITUDE, marker.getPosition().latitude);
-        intent.putExtra(AddHouseActivity.LONGITUDE, marker.getPosition().longitude);
-        startActivity(intent);
+        // first check if the mark's coordinate is in the database or not
+        if (mHouseInfo == null) {
+            mHouseInfo = HouseInfo.get(getActivity());
+        }
+        House house = mHouseInfo.getHouseByCoordinate(marker.getPosition());
+        if (house==null) {
+            System.out.println("This is a new marker");
+            Intent intent = new Intent(mContext, AddHouseActivity.class);
+            intent.putExtra(AddHouseActivity.LATITUDE, marker.getPosition().latitude);
+            intent.putExtra(AddHouseActivity.LONGITUDE, marker.getPosition().longitude);
+            intent.putExtra(AddHouseActivity.UPDATE, "create");
+            startActivity(intent);
+        } else {
+            System.out.println("This is an exist marker");
+            Intent intent = new Intent(mContext, AddHouseActivity.class);
+            intent.putExtra(AddHouseActivity.LATITUDE, house.getLatitude());
+            intent.putExtra(AddHouseActivity.LONGITUDE, house.getLongitude());
+            intent.putExtra(AddHouseActivity.PRICE, house.getPrice());
+            intent.putExtra(AddHouseActivity.ADDRESS, house.getAddress());
+            intent.putExtra(AddHouseActivity.DESCRIPTION, house.getDescription());
+            intent.putExtra(AddHouseActivity.UPDATE, "update");
+            startActivity(intent);
+        }
+
     }
 
     @Override
