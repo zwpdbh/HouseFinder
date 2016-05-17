@@ -77,17 +77,26 @@ public class HouseInfo {
     public House getHouseByCoordinate(LatLng latLng) {
         double latitude = latLng.latitude;
         double longitude = latLng.longitude;
-        HouseCursorWrapper cursor = (HouseCursorWrapper) queryHouses(
-                HouseTable.Cols.LATITUDE + " = ?" + " AND " + HouseTable.Cols.LONGITUDE + " = ?",
-                new String[] { Double.toString(latitude), Double.toString(longitude) }
-        );
+
+        String where = HouseTable.Cols.LATITUDE + " = ?" + " AND " + HouseTable.Cols.LONGITUDE + " = ?";
+        String[] whereArgs = new String[] { Double.toString(latitude), Double.toString(longitude)};
+        Cursor cursor = mDatabase.query(HouseTable.NAME, null, where, whereArgs, null, null, null);
+        
 
         try {
             if (cursor.getCount() == 0) {
                 return null;
+            } else {
+                cursor.moveToFirst();
+                House house = new House();
+                house.setDescription(cursor.getString(cursor.getColumnIndex(HouseTable.Cols.DESCRIPTION)));
+                house.setAddress(cursor.getString(cursor.getColumnIndex(HouseTable.Cols.ADDRESS)));
+                house.setLatitude(cursor.getDouble(cursor.getColumnIndex(HouseTable.Cols.LATITUDE)));
+                house.setLongitude(cursor.getDouble(cursor.getColumnIndex(HouseTable.Cols.LONGITUDE)));
+                house.setPrice(cursor.getInt(cursor.getColumnIndex(HouseTable.Cols.PRICE)));
+                house.setPictureId(cursor.getInt(cursor.getColumnIndex(HouseTable.Cols.PICTURE_ID)));
+                return house;
             }
-            cursor.moveToFirst();
-            return cursor.getHouse();
         } finally {
             cursor.close();
         }
