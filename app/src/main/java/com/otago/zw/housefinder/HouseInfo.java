@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.otago.zw.housefinder.database.DatabaseHelper;
 import com.otago.zw.housefinder.database.HouseCursorWrapper;
 import com.otago.zw.housefinder.database.HouseDBSchema;
@@ -54,7 +55,7 @@ public class HouseInfo {
         return houses;
     }
 
-    public House getHouse(UUID uuid) {
+    public House getHouseById(UUID uuid) {
         HouseCursorWrapper cursor = (HouseCursorWrapper) queryHouses(
                 HouseTable.Cols.UUID + " = ?",
                 new String[] { uuid.toString() }
@@ -72,6 +73,26 @@ public class HouseInfo {
         }
 
     }
+
+    public House getHouseByCoordinate(LatLng latLng) {
+        double latitude = latLng.latitude;
+        double longitude = latLng.longitude;
+        HouseCursorWrapper cursor = (HouseCursorWrapper) queryHouses(
+                HouseTable.Cols.LATITUDE + " = ?" + " AND" + HouseTable.Cols.LONGITUDE + " = ?",
+                new String[] { Double.toString(latitude), Double.toString(longitude) }
+        );
+
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getHouse();
+        } finally {
+            cursor.close();
+        }
+    }
+
 
     private static ContentValues getContentValues(House house) {
         ContentValues values = new ContentValues();
