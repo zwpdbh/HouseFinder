@@ -44,19 +44,18 @@ public class AddHouseActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();      // why declared as final ?
 
-        if (savedInstanceState!=null) {
-            LatLng latLng = new LatLng(intent.getDoubleExtra(LATITUDE, 0), intent.getDoubleExtra(LONGITUDE, 0));
-            System.out.println("Get latLng: " + latLng.latitude + "<>" +latLng.longitude);
-            latitudeView.setText(Double.toString(latLng.latitude));
-            longitudeView.setText(Double.toString(latLng.longitude));
+        LatLng latLng = new LatLng(intent.getDoubleExtra(LATITUDE, 0), intent.getDoubleExtra(LONGITUDE, 0));
+        System.out.println("Get latLng: " + latLng.latitude + "<>" + latLng.longitude);
+        latitudeView.setText(Double.toString(latLng.latitude));
+        longitudeView.setText(Double.toString(latLng.longitude));
 
-            if (intent.getStringExtra(UPDATE).equals("update")) {
-                addressView.setText(intent.getStringExtra(ADDRESS));
-                descriptionView.setText(intent.getStringExtra(DESCRIPTION));
-                priceView.setText(intent.getIntExtra(PRICE, 0));
-                update = false;
-            }
+        if (intent.getStringExtra(UPDATE).equals("update")) {
+            addressView.setText(intent.getStringExtra(ADDRESS));
+            descriptionView.setText(intent.getStringExtra(DESCRIPTION));
+            priceView.setText(intent.getIntExtra(PRICE, 0));
+            update = false;
         }
+
 
         mButton = (Button) findViewById(R.id.save_house_button);
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -77,10 +76,10 @@ public class AddHouseActivity extends AppCompatActivity {
                 house.setLatitude(latitude);
                 house.setLongitude(longitude);
 
-                if (update) {
+                if (!update) {
                     houseInfo.addHouse(house);
                 } else {
-                    houseInfo.updateHouse(house);
+                    houseInfo.updateHouseByCoordinate(house);
                 }
 
                 Intent intent = new Intent(v.getContext(), MapsActivity.class);

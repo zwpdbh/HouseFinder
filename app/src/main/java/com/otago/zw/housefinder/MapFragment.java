@@ -160,7 +160,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        System.out.println("click marker");
+        System.out.println("Marker: " + marker.getPosition().latitude + "<>" + marker.getPosition().longitude);
         return false;
     }
 

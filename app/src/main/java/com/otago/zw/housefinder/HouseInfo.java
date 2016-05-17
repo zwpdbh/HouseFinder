@@ -78,7 +78,7 @@ public class HouseInfo {
         double latitude = latLng.latitude;
         double longitude = latLng.longitude;
         HouseCursorWrapper cursor = (HouseCursorWrapper) queryHouses(
-                HouseTable.Cols.LATITUDE + " = ?" + " AND" + HouseTable.Cols.LONGITUDE + " = ?",
+                HouseTable.Cols.LATITUDE + " = ?" + " AND " + HouseTable.Cols.LONGITUDE + " = ?",
                 new String[] { Double.toString(latitude), Double.toString(longitude) }
         );
 
@@ -130,6 +130,14 @@ public class HouseInfo {
         String uuidString = house.getUUID().toString();
         ContentValues values = getContentValues(house);
         mDatabase.update(HouseTable.NAME, values, HouseTable.Cols.UUID + " = ?", new String[] { uuidString });
+    }
+
+    public void updateHouseByCoordinate(House house) {
+        String latitude = Double.toString(house.getLatitude());
+        String longitude = Double.toString(house.getLongitude());
+
+        ContentValues values = getContentValues(house);
+        mDatabase.update(HouseTable.NAME, values, HouseTable.Cols.LATITUDE + " = ?" + " AND " + HouseTable.Cols.LONGITUDE + " = ?", new String[] { latitude, longitude });
     }
 
 }

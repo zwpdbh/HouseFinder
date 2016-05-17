@@ -32,6 +32,7 @@ public class HouseCursorWrapper extends CursorWrapper {
         house.setLongitude(longitude);
         house.setPrice(price);
         house.setPictureId(pictureId);
+
         return house;
     }
 }
