@@ -11,16 +11,16 @@ public class HouseDBSchema {
     public HouseDBSchema() {};
 
     public static final class HouseTable {
-        public static final String NAME = "Houses";
+        public static final String NAME = "HOUSE";
 
         public static final class Cols implements BaseColumns{
-            public static final String UUID = "uuid";
-            public static final String ADDRESS = "address";
-            public static final String DESCRIPTION = "description";
-            public static final String LATITUDE = "latitude";
-            public static final String LONGITUDE = "longitude";
-            public static final String PRICE = "price";
-            public static final String PICTURE_ID = "pictureId";
+            public static final String UUID = "UUID";
+            public static final String ADDRESS = "ADDRESS";
+            public static final String DESCRIPTION = "DESCRIPTION";
+            public static final String LATITUDE = "LATITUDE";
+            public static final String LONGITUDE = "LONGITUDE";
+            public static final String PRICE = "PRICE";
+            public static final String PICTURE_ID = "PICTURE";
         }
     }
 }
